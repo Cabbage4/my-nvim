@@ -23,6 +23,10 @@ if vim.g.neovide then
   vim.keymap.set("n", "<C-->", function()
     change_scale_factor(1 / 1.25)
   end)
+
+  vim.keymap.set("n", "<CD-f>", function()
+    vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
+  end)
 end
 
 -- myself
@@ -41,6 +45,7 @@ end)
 -- editor
 vim.keymap.set("n", "<D-a>", "gg<S-v>G")
 vim.keymap.set("i", "<D-a>", "<ESC>gg<S-v>G")
-vim.keymap.set("n", "<MiddleMouse>", "<C-o>")
+-- vim.keymap.set("n", "<leader>R", "<leader>e<leader>e")
 
-vim.keymap.set("n", "<D-p>", function() end)
+-- terminal
+-- vim.keymap.set("n", "<c-/>", "<cmd>ToggleTerm direction=float<cr>", { desc = "Terminal float" })
