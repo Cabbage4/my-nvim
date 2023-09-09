@@ -4,6 +4,7 @@
 --
 --
 --
+
 vim.opt.relativenumber = true
 
 if vim.g.neovide then
@@ -15,3 +16,12 @@ end
 
 vim.api.nvim_exec("set fdm=marker", true)
 vim.api.nvim_exec("set norelativenumber", true)
+require("mason-lspconfig").setup({
+  automatic_installation = false,
+})
+
+require("telescope").setup({
+  defaults = {
+    layout_strategy = "vertical",
+  },
+})

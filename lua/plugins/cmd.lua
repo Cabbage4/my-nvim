@@ -1,6 +1,8 @@
 -- vim.opt.runtimepath:append("$HOME/go/src/cmd.nvim")
 -- require("cmd").setup()
 
+local Util = require("lazyvim.util")
+
 return {
   {
     "Cabbage4/cmd.nvim",
@@ -39,6 +41,34 @@ return {
           vim.api.nvim_exec("set fdm=indent", true)
         end,
         desc = "set fdm=indent",
+      },
+      {
+        "<leader>R",
+        function()
+          vim.api.nvim_exec("LspRestart", true)
+        end,
+        desc = "lsp restart",
+      },
+      {
+        "<c-/>",
+        function()
+          Util.float_term(nil, { cwd = Util.get_root(), border = "single" })
+        end,
+        desc = "Terminal (root dir)",
+      },
+      {
+        "<leader>ft",
+        function()
+          Util.float_term(nil, { cwd = Util.get_root(), border = "single" })
+        end,
+        desc = "Terminal (root dir)",
+      },
+      {
+        "<leader>fT",
+        function()
+          Util.float_term()
+        end,
+        desc = "Terminal (cwd)",
       },
     },
     config = function()
