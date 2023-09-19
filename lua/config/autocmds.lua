@@ -14,7 +14,7 @@ if vim.g.neovide then
   vim.g.neovide_refresh_rate = 120
 end
 
-vim.api.nvim_exec("set fdm=marker", true)
+vim.api.nvim_exec("set fdm=manual", true)
 vim.api.nvim_exec("set norelativenumber", true)
 require("mason-lspconfig").setup({
   automatic_installation = false,
@@ -23,5 +23,19 @@ require("mason-lspconfig").setup({
 require("telescope").setup({
   defaults = {
     layout_strategy = "vertical",
+    layout_config = { height = 0.95, width = 0.95 },
   },
 })
+
+-- if there was a linting error on the current cursor
+-- position open a popup, otherwise show the lsp hover
+-- documentation
+function Hover()
+  if not require("prosesitter").popup() then
+    vim.lsp.buf.hover()
+  end
+end
+
+local cmd = ":lua Hover()<CR>"
+local opt = { noremap = true, silent = true, nowait = true }
+vim.api.nvim_set_keymap("n", ",", cmd, opt)

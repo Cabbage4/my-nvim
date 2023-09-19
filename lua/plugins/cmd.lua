@@ -52,21 +52,21 @@ return {
       {
         "<c-/>",
         function()
-          Util.float_term(nil, { cwd = Util.get_root(), border = "single" })
+          Util.terminal.open(nil, { cwd = Util.root.get(), border = "single" })
         end,
         desc = "Terminal (root dir)",
       },
       {
         "<leader>ft",
         function()
-          Util.float_term(nil, { cwd = Util.get_root(), border = "single" })
+          Util.terminal.open(nil, { cwd = Util.root.get(), border = "single" })
         end,
         desc = "Terminal (root dir)",
       },
       {
         "<leader>fT",
         function()
-          Util.float_term()
+          Util.terminal.open()
         end,
         desc = "Terminal (cwd)",
       },
