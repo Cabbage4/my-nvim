@@ -34,19 +34,3 @@ end
 vim.keymap.set({ "n", "x", "o" }, "<leader>cos", function()
   require("flash").jump()
 end)
-
-vim.keymap.set({ "n", "x", "o", "i" }, "<D-w>", function()
-  require("mini.bufremove").delete(0, false)
-end)
-
-vim.keymap.set("n", "<D-LeftMouse>", function()
-  require("telescope.builtin").lsp_definitions({ reuse_win = true })
-end)
-
--- editor
-vim.keymap.set("n", "<D-a>", "gg<S-v>G")
-vim.keymap.set("i", "<D-a>", "<ESC>gg<S-v>G")
--- vim.keymap.set("n", "<leader>R", "<leader>e<leader>e")
-
--- terminal
--- vim.keymap.set("n", "<c-/>", "<cmd>ToggleTerm direction=float<cr>", { desc = "Terminal float" })

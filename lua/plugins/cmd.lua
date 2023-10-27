@@ -8,42 +8,45 @@ return {
     "Cabbage4/cmd.nvim",
     keys = {
       {
-        "<leader>coo",
+        "<D-t>",
         function()
-          require("cmd").win()
+          vim.notify("test start")
+          vim.notify("test end")
         end,
-        desc = "open tabs",
-      },
-      {
-        "<leader>coj",
-        function()
-          require("cmd").jump()
-        end,
-        desc = "jump to tab",
+        desc = "test function",
       },
       {
         "<D-n>",
         function()
-          vim.fn.jobstart("open -n '/Applications/neovide.app/' --args .")
+          local dir = require("telescope.utils").buffer_dir()
+          vim.fn.jobstart("open -n '/Applications/neovide.app/' --args " .. dir)
         end,
         desc = "new instance",
       },
       {
-        "<leader>com",
+        "<leader>cof",
         function()
-          vim.api.nvim_exec("set fdm=marker", true)
+          require("cmd").format()
         end,
-        desc = "set index=marker",
+        desc = "format by myself",
       },
       {
-        "<leader>coi",
+        "<leader>coz",
         function()
-          vim.api.nvim_exec("set fdm=indent", true)
+          require("cmd").fold()
         end,
-        desc = "set fdm=indent",
+        desc = "fold by myself",
       },
       {
-        "<leader>R",
+        "<D-f>",
+        function()
+          -- require("telescope.builtin").grep_string({ cwd = Util.root.get() })
+          require("telescope.builtin").live_grep({ cwd = Util.root.get() })
+        end,
+        desc = "grep in current cwd",
+      },
+      {
+        "<D-r>",
         function()
           vim.api.nvim_exec("LspRestart", true)
         end,
@@ -52,23 +55,15 @@ return {
       {
         "<c-/>",
         function()
-          Util.terminal.open(nil, { cwd = Util.root.get(), border = "single" })
+          Util.terminal.open(nil, {
+            cwd = Util.root.get(),
+            border = "single",
+            size = { width = 0.95, height = 0.9 },
+            title = "terminal",
+            title_pos = "center",
+          })
         end,
         desc = "Terminal (root dir)",
-      },
-      {
-        "<leader>ft",
-        function()
-          Util.terminal.open(nil, { cwd = Util.root.get(), border = "single" })
-        end,
-        desc = "Terminal (root dir)",
-      },
-      {
-        "<leader>fT",
-        function()
-          Util.terminal.open()
-        end,
-        desc = "Terminal (cwd)",
       },
     },
     config = function()
