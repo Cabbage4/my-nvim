@@ -3,12 +3,61 @@
 
 local Util = require("lazyvim.util")
 
+local Input = require("nui.input")
+local input = Input({
+  position = "50%",
+  size = {
+    width = 50,
+  },
+  border = {
+    style = "single",
+    text = {
+      top = "grep in folder",
+      top_align = "center",
+    },
+  },
+  win_options = {
+    winhighlight = "Normal:Normal,FloatBorder:Normal",
+  },
+}, {
+  prompt = "> ",
+  default_value = "",
+  on_close = function() end,
+  on_submit = function(value)
+    local path = Util.root.get() .. "/" .. value
+    require("telescope.builtin").live_grep({ cwd = path })
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    if require("lazyvim.util").format.enabled() == false then
+      return
+    end
+
+    require("cmd").format()
+
+    local file_path = vim.fn.expand("%:p")
+    local file_path_split = vim.split(file_path, "/")
+    local file_name = file_path_split[#file_path_split]
+    local file_type = require("telescope.utils").file_extension(file_name)
+
+    if file_type == "go" then
+      vim.fn.jobstart("importgroup -f " .. file_path, {
+        on_exit = function()
+          vim.cmd("e")
+        end,
+      })
+    end
+  end,
+})
+
 return {
   {
     "Cabbage4/cmd.nvim",
     keys = {
       {
-        "<D-t>",
+        "<c-t",
         function()
           vim.notify("test start")
           vim.notify("test end")
@@ -16,54 +65,38 @@ return {
         desc = "test function",
       },
       {
-        "<D-n>",
+        "<leader>cog",
         function()
-          local dir = require("telescope.utils").buffer_dir()
-          vim.fn.jobstart("open -n '/Applications/neovide.app/' --args " .. dir)
+          input:mount()
         end,
-        desc = "new instance",
+        desc = "find in folder",
       },
       {
         "<leader>cof",
+        "<cmd>Neotree reveal<cr>",
+        desc = "focus on current file at tree",
+      },
+      {
+        "<leader>cor",
         function()
-          require("cmd").format()
+          local root = Util.root.get()
+          vim.fn.system('tmux rename-window "$(basename ' .. root .. ')"')
         end,
-        desc = "format by myself",
+        desc = "tmux rename",
+      },
+      {
+        "<leader>cos",
+        function()
+          require("flash").jump()
+        end,
+        desc = "skip",
       },
       {
         "<leader>coz",
         function()
           require("cmd").fold()
         end,
-        desc = "fold by myself",
-      },
-      {
-        "<D-f>",
-        function()
-          -- require("telescope.builtin").grep_string({ cwd = Util.root.get() })
-          require("telescope.builtin").live_grep({ cwd = Util.root.get() })
-        end,
-        desc = "grep in current cwd",
-      },
-      {
-        "<D-r>",
-        function()
-          vim.api.nvim_exec("LspRestart", true)
-        end,
-        desc = "lsp restart",
-      },
-      {
-        "<c-/>",
-        function()
-          Util.terminal.open(nil, {
-            cwd = Util.root.get(),
-            border = "single",
-            size = { width = 0.95, height = 0.9 },
-            title = "terminal",
-            title_pos = "center",
-          })
-        end,
-        desc = "Terminal (root dir)",
+        desc = "fold",
       },
     },
     config = function()

@@ -4,22 +4,8 @@
 --
 --
 --
-
-if vim.fn.exists("$TMUX") then
-  vim.o.shell = "tmux"
-end
-
-if vim.g.neovide then
-  vim.g.neovide_scale_factor = 1.0
-  vim.g.neovide_cursor_vfx_mode = "railgun"
-  vim.g.neovide_refresh_rate = 60
-end
-
 vim.api.nvim_exec("set fdm=manual", true)
 vim.api.nvim_exec("set norelativenumber", true)
-require("mason-lspconfig").setup({
-  automatic_installation = false,
-})
 
 require("telescope").setup({
   defaults = {
@@ -67,4 +53,12 @@ require("project_nvim").setup({
   -- Path where project.nvim will store the project history for use in
   -- telescope
   datapath = vim.fn.stdpath("data"),
+})
+
+require("neo-tree").setup({
+  filesystem = {
+    follow_current_file = {
+      enabled = false,
+    },
+  },
 })

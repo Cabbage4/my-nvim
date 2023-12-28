@@ -7,7 +7,7 @@ local input = Input({
   border = {
     style = "single",
     text = {
-      top = "lang",
+      top = "suffix",
       top_align = "center",
     },
   },
@@ -19,6 +19,10 @@ local input = Input({
   default_value = "",
   on_close = function() end,
   on_submit = function(value)
+    if value == "" then
+      return
+    end
+
     vim.api.nvim_exec("w /tmp/tmp" .. value, true)
   end,
 })
@@ -40,11 +44,11 @@ return {
         desc = "New buffer",
       },
       {
-        "<D-p>",
+        "<c-p>",
         function()
           input:mount()
         end,
-        desc = "test function",
+        desc = "save file with suffix",
       },
     },
   },
