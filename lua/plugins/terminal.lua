@@ -4,15 +4,13 @@ return {
     "akinsho/toggleterm.nvim",
     version = "*",
     config = function()
-      require("toggleterm").setup({
-        shell = "tmux",
-      })
+      require("toggleterm").setup({})
     end,
     keys = {
       {
-        "<D-j>",
+        "<leader>cot",
         "<cmd>ToggleTerm dir=" .. Util.root.get() .. "<cr>",
-        desc = "test function",
+        desc = "open terminal",
       },
     },
   },

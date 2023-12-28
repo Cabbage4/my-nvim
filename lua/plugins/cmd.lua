@@ -8,7 +8,7 @@ return {
     "Cabbage4/cmd.nvim",
     keys = {
       {
-        "<D-t>",
+        "<c-t>",
         function()
           vim.notify("test start")
           vim.notify("test end")
@@ -16,54 +16,33 @@ return {
         desc = "test function",
       },
       {
-        "<D-n>",
+        "<leader>cor",
         function()
-          local dir = require("telescope.utils").buffer_dir()
-          vim.fn.jobstart("open -n '/Applications/neovide.app/' --args " .. dir)
+          local root = Util.root.get()
+          vim.fn.system('tmux rename-window "$(basename ' .. root .. ')"')
         end,
-        desc = "new instance",
+        desc = "tmux rename",
       },
       {
         "<leader>cof",
         function()
           require("cmd").format()
         end,
-        desc = "format by myself",
+        desc = "format",
+      },
+      {
+        "<leader>cos",
+        function()
+          require("flash").jump()
+        end,
+        desc = "skip",
       },
       {
         "<leader>coz",
         function()
           require("cmd").fold()
         end,
-        desc = "fold by myself",
-      },
-      {
-        "<D-f>",
-        function()
-          -- require("telescope.builtin").grep_string({ cwd = Util.root.get() })
-          require("telescope.builtin").live_grep({ cwd = Util.root.get() })
-        end,
-        desc = "grep in current cwd",
-      },
-      {
-        "<D-r>",
-        function()
-          vim.api.nvim_exec("LspRestart", true)
-        end,
-        desc = "lsp restart",
-      },
-      {
-        "<c-/>",
-        function()
-          Util.terminal.open(nil, {
-            cwd = Util.root.get(),
-            border = "single",
-            size = { width = 0.95, height = 0.9 },
-            title = "terminal",
-            title_pos = "center",
-          })
-        end,
-        desc = "Terminal (root dir)",
+        desc = "fold",
       },
     },
     config = function()
