@@ -4,7 +4,7 @@
 --
 --
 --
-vim.api.nvim_exec("set fdm=manual", true)
+vim.api.nvim_exec("set fdm=indent", true)
 vim.api.nvim_exec("set norelativenumber", true)
 
 require("telescope").setup({
@@ -55,10 +55,10 @@ require("project_nvim").setup({
   datapath = vim.fn.stdpath("data"),
 })
 
-require("neo-tree").setup({
-  filesystem = {
-    follow_current_file = {
-      enabled = false,
-    },
-  },
-})
+-- require("neo-tree").setup({
+--   filesystem = {
+--     follow_current_file = {
+--       enabled = false,
+--     },
+--   },
+-- })

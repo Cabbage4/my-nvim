@@ -65,18 +65,6 @@ return {
         desc = "test function",
       },
       {
-        "<leader>cog",
-        function()
-          input:mount()
-        end,
-        desc = "find in folder",
-      },
-      {
-        "<leader>cof",
-        "<cmd>Neotree reveal<cr>",
-        desc = "focus on current file at tree",
-      },
-      {
         "<leader>cor",
         function()
           local root = Util.root.get()
@@ -90,13 +78,6 @@ return {
           require("flash").jump()
         end,
         desc = "skip",
-      },
-      {
-        "<leader>coz",
-        function()
-          require("cmd").fold()
-        end,
-        desc = "fold",
       },
     },
     config = function()
